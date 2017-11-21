@@ -1,0 +1,29 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+dependencies {
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+    //android build tool
+    implementation 'com.android.tools.build:gradle:3.0.0'
+    //javasisst
+    implementation 'org.javassist:javassist:3.20.0-GA'
+}
+//防止因为java sdk 版本不同，导致不能使用的问题。将编译版本指定在java 1.7
+compileGroovy {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+    options.encoding = 'UTF-8'
+}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+            pom.groupId = 'com.cry'
+            pom.artifactId = 'plugin_demo'
+            pom.version = '2.1.0'
+        }
+    }
+}
